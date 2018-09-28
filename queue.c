@@ -12,6 +12,7 @@ void initQueue(struct queue *q, size_t data_size)
     q->que_size = 0;
 
     q->init = initQueue;
+    q->size = Que_size;
     q->enque = Que_enque;
     q->deque = Que_deque;
     q->clear = Que_clear;

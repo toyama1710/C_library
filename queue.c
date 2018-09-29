@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void initQueue(struct queue *q, size_t data_size)
+void initQueue(struct queue *q, const size_t data_size)
 {
     q->current = NULL;
     q->last = NULL;

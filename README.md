@@ -12,8 +12,6 @@ queueが空のときにdequeする、データの格納スペースが無い、�
 <br>
 Que_clear(&que); que.clear(&que);でqueueをクリアできます。O(N)です。<br>
 戻り値はありません。また、メモリリークを防ぐため、使い終わったqueueは必ずクリアしてください。<br>
-clearした後ならばもう一度initQueue(); que.init();を呼び出して、格納するデータ型を変更することも可能です。<br>
-queueを使いまわしたいときにどうぞ。<br>
 <br>
 Que_size(&que); que.size(&que); でqueueのサイズを取得できます。<br>
 C++のSTLのque.empty();のように空判定などにお使いください。<br>

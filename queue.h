@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-typedef struct {
+typedef struct _QueCell{
     void *data;
-    void *next;
+    struct _QueCell *next;
 } QueCell;
 
 typedef struct queue {

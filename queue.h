@@ -3,9 +3,9 @@
 
 #include <stdio.h>
 
-typedef struct _QueCell{
+typedef struct que_cell{
     void *data;
-    struct _QueCell *next;
+    struct que_cell *next;
 } QueCell;
 
 typedef struct queue {

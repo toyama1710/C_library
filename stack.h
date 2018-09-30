@@ -1,8 +1,11 @@
+#ifndef __Ei1710_STACK_H
+#define __Ei1710_STACK_H
+
 #include <stddef.h>
 
-typedef struct {
+typedef struct stack_cell{
     void *data;
-    void *prev;
+    struct stack_cell *prev;
 }StackCell;
 
 typedef struct stack {
@@ -23,3 +26,5 @@ int Stack_push(struct stack *s, const void *data);
 int Stack_pop(struct stack *s, void *data);
 size_t Stack_size(struct stack *s);
 void Stack_clear(struct stack *s);
+
+#endif

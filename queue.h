@@ -1,3 +1,6 @@
+#ifndef __Ei1710_Queue_H
+#define __Ei1710_Queue_H
+
 #include <stdio.h>
 
 typedef struct _QueCell{
@@ -24,3 +27,5 @@ int Que_enque(struct queue *q, const void *data);
 int Que_deque(struct queue *q, void *data);
 size_t Que_size(struct queue *q);
 void Que_clear(struct queue *q);
+
+#endif

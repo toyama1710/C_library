@@ -3,8 +3,13 @@
 #include <string.h>
 #include <stdio.h>
 
-typedef unsigned char __Byte; //Byteåž‹ã ã¨æ—¢å­˜ã®ã‚‚ã®ã¨è¢«ã‚‹ã‹ã‚‚ã—ã‚Œãªã„ã®ã§
+typedef unsigned char __Byte; //ByteŒ^‚¾‚ÆŠù‘¶‚ÌŒ^–¼‚Æ”í‚é‚©‚à‚µ‚ê‚È‚¢‚Ì‚Å
 
+//-------
+//1ƒoƒCƒg‚¸‚Âmemcopy(), memmove()‚È‚Ç‚Åƒf[ƒ^‚ðŠi”[
+//—v‘f‚Ö‚ÌƒAƒNƒZƒX‚Ísizeof(Type) * index ƒoƒCƒg•ªæ‚Ì—v‘f‚ðŒ©‚ÄŽÀŒ»
+//‚ ‚ç‚©‚¶‚ß‘å‚«–Ú‚É—Ìˆæ‚ðŽæ‚Á‚Ä‚¨‚«AƒLƒƒƒpƒVƒeƒBƒI[ƒo[‚µ‚½‚çrealloc()‚·‚é
+//-------
 typedef struct vector {
     __Byte *storage;
 

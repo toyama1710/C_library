@@ -1,7 +1,7 @@
 #include "queue.h"
 
 void Queue_cell_remove(QueCell *remove);
-QueCell *Queue_cell_alloc(void *data, size_t data_size);
+QueCell *Queue_cell_create(void *data, size_t data_size);
 
 void Queue_cell_remove(QueCell *remove)
 {
@@ -11,7 +11,7 @@ void Queue_cell_remove(QueCell *remove)
 	return;
 }
 
-QueCell *Queue_cell_alloc(void *data, size_t data_size)
+QueCell *Queue_cell_create(void *data, size_t data_size)
 {
 	QueCell *cell = malloc(sizeof(QueCell));
 
@@ -45,7 +45,7 @@ void Queue_init(struct queue *q, const size_t data_size)
 
 int Queue_enque(struct queue *q, void *data)
 {
-	QueCell *new_data = Queue_cell_alloc(data, q->data_size);
+	QueCell *new_data = Queue_cell_create(data, q->data_size);
 
 	if (new_data == NULL) {
 		return 0;

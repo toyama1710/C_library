@@ -3,62 +3,81 @@
 #include <string.h>
 #include "stack.h"
 
-void initStack(struct stack *s, const size_t data_size)
+StackCell *Stack_cell_create(const void *data, size_t data_size);
+void Stack_cell_remove(StackCell *remove);
+
+StackCell *Stack_cell_create(const void *data, size_t data_size)
+{
+	StackCell *cell = malloc(sizeof(StackCell));
+
+	if (cell == NULL) {
+		return NULL;
+	}
+
+	cell->data = malloc(sizeof(data_size));
+
+	if (cell->data == NULL) {
+		free(cell);
+		return NULL;
+	}
+
+	memcpy(cell->data, data, data_size);
+	cell->next = NULL;
+
+	return cell;
+}
+
+void Stack_cell_remove(StackCell *remove)
+{
+	free(remove->data);
+	free(remove);
+	
+	return;
+}
+
+void Stack_init(struct stack *s, size_t data_size)
 {
     s->sp = NULL;
 
     s->data_size = data_size;
     s->stack_size = 0;
 
-    s->init = initStack;
-    s->push = Stack_push;
-    s->pop = Stack_pop;
-    s->size = Stack_size;
-    s->clear = Stack_clear;
-
     return;
 }
 
 int Stack_push(struct stack *s, const void *data)
 {
-    StackCell *new_data = (StackCell *)malloc(sizeof(StackCell));
+	StackCell *new_cell = Stack_cell_create(data, s->data_size);
 
-    if (new_data == NULL) {
-        return -1;
-    }
+	if (new_cell == NULL) {
+		return 0;
+	}
 
-    new_data->data = malloc(s->data_size);
+    new_cell->next = s->sp;
+    s->sp = new_cell;
 
-    if (new_data->data == NULL) {
-        return -1;
-    } else {
-        memcpy(new_data->data, data, s->data_size);
-        ++(s->stack_size);
-    }
-    
-    new_data->prev = s->sp;
-    s->sp = new_data;
+	s->stack_size = s->stack_size + 1;
 
-    return 0;
+    return 1;
 }
 
 int Stack_pop(struct stack *s, void *data)
 {
     if (s->sp == NULL) {
-        return -1;
+        return 0;
     }
 
-    memcpy(data, s->sp->data, s->data_size);
+	if (data != NULL) {
+		memcpy(data, s->sp->data, s->data_size);
+	}
 
-    StackCell *prev = s->sp->prev;
-    --(s->stack_size);
+    StackCell *remove = s->sp;
+	s->sp = s->sp->next;
+	Stack_cell_remove(remove);
 
-    free(s->sp->data);
-    free(s->sp);
-    
-    s->sp = prev;
+    s->stack_size = s->stack_size - 1;
 
-    return 0;
+    return 1;
 }
 
 size_t Stack_size(struct stack *s)
@@ -68,16 +87,9 @@ size_t Stack_size(struct stack *s)
 
 void Stack_clear(struct stack *s)
 {
-    while (s->sp != NULL) {
-        StackCell *prev = s->sp->prev;
-
-        free(s->sp->data);
-        free(s->sp);
-
-        s->sp = prev;
+    while (Stack_size(s)) {
+		Stack_pop(s, NULL);
     }
-
-    initStack(s, s->stack_size);
 
     return;
 }

@@ -1,5 +1,5 @@
-#ifndef __Ei1710_STACK_H
-#define __Ei1710_STACK_H
+#ifndef EI1710_STACK_H
+#define EI1710_STACK_H
 
 #include <stddef.h>
 #include <stdlib.h>

@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 #include "queue.h"
-#include "../utility/utility.h"
 
 typedef int TestType;
 
+int finput(FILE *source, const char *format, ...);
 
 int main()
 {
@@ -15,8 +16,9 @@ int main()
 
 	do {
 		finput(stdin, "%s", str);
+
 		if (str[0] == 'e') {
-			finput(stdin, " %d ", &x);
+			finput(stdin, "%d", &x);
 
 			Queue_enque(&que, &(TestType){x});
 
@@ -32,4 +34,19 @@ int main()
 	Queue_clear(&que);
 
 	return 0;
+}
+
+int finput(FILE *source, const char *format, ...)
+{
+    va_list arg;
+    char buff[1024];
+    int result;
+
+    fgets(buff, sizeof(buff) - 1, source);
+
+    va_start(arg, format);
+    result = vsscanf(buff, format, arg);
+    va_end(arg);
+
+	return result;
 }

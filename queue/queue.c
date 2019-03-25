@@ -52,7 +52,7 @@ int Queue_enque(struct queue *q, void *data)
 	}
 
 	//ƒZƒ‹’Ç‰Á
-	if (q->last == NULL) {
+	if (q->que_length <= 0) {
 		q->last = new_data;
 		q->head = new_data;
 	} else {

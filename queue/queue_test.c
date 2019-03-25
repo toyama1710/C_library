@@ -3,14 +3,17 @@
 #include <stdarg.h>
 #include "queue.h"
 
-typedef int TestType;
+typedef struct {
+	int x, y;
+} TestType;
 
 int finput(FILE *source, const char *format, ...);
 
 int main()
 {
 	char str[256];
-	TestType x;
+	TestType in;
+	TestType out;
 	Queue que;
 	Queue_init(&que, sizeof(TestType));
 
@@ -18,13 +21,13 @@ int main()
 		finput(stdin, "%s", str);
 
 		if (str[0] == 'e') {
-			finput(stdin, "%d", &x);
+			finput(stdin, "%d %d", &in.x, &in.y);
 
-			Queue_enque(&que, &(TestType){x});
+			Queue_enque(&que, &in);
 
 		} else if (str[0] == 'd') {
-			if (Queue_deque(&que, &x)) {
-				printf("%d %d\n", x, Queue_size(&que));
+			if (Queue_deque(&que, &out)) {
+				printf("%d %d\n", out.x, out.y);
 			} else {
 				puts("error");
 			}

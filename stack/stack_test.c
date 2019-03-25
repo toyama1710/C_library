@@ -3,9 +3,7 @@
 #include <stdarg.h>
 #include "stack.c"
 
-typedef struct {
-	int x, y;
-} TestType;
+typedef char TestType;
 
 int finput(FILE *source, const char *format, ...);
 
@@ -21,13 +19,13 @@ int main()
 		finput(stdin, "%s", str);
 
 		if (strcmp(str, "push") == 0) {
-			finput(stdin, "%d %d", &in.x, &in.y);
+			finput(stdin, "%c", &in);
 
 			Stack_push(&st, &in);
 
 		} else if (strcmp(str, "pop") == 0) {
 			if (Stack_pop(&st, &out)) {
-				printf("%d %d\n", out.x, out.y);
+				printf("%c\n", out);
 			} else {
 				puts("error");
 			}

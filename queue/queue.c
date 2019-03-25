@@ -1,6 +1,17 @@
 #include "queue.h"
 
-QueCell *Queue_cell_alloc(va_list data, size_t data_size)
+void Queue_cell_remove(QueCell *remove);
+QueCell *Queue_cell_alloc(void *data, size_t data_size);
+
+void Queue_cell_remove(QueCell *remove)
+{
+	free(remove->data);
+	free(remove);
+
+	return;
+}
+
+QueCell *Queue_cell_alloc(void *data, size_t data_size)
 {
 	QueCell *cell = malloc(sizeof(QueCell));
 
@@ -15,9 +26,10 @@ QueCell *Queue_cell_alloc(va_list data, size_t data_size)
 		return NULL;
 	}
 
-	vmemcpy(cell->data, data);
+	memcpy(cell->data, data, data_size);
+	cell->next = NULL;
 
-	return 0;
+	return cell;
 }
 
 void Queue_init(struct queue *q, const size_t data_size)
@@ -31,15 +43,9 @@ void Queue_init(struct queue *q, const size_t data_size)
 	return;
 }
 
-int Queue_enque(struct queue *q, ...);
+int Queue_enque(struct queue *q, void *data)
 {
-	va_list data;
-	QueCell *new_data;
-
-	//セル生成
-	va_start(data, q);
-	new_data = Queue_cell_alloc(data);
-	va_end(data);
+	QueCell *new_data = Queue_cell_alloc(data, q->data_size);
 
 	if (new_data == NULL) {
 		return 0;
@@ -56,23 +62,23 @@ int Queue_enque(struct queue *q, ...);
 
 	q->que_length = q->que_length + 1;
 
-	return 0;
+	return 1;
 }
 
-int Que_deque(struct queue *q, void *data)
+int Queue_deque(struct queue *q, void *data)
 {
-	if (q->que_size > 0) {
+	if (q->que_length > 0) {
+
 		//データコピー
-		
 		if (data != NULL) {
 			memcpy(data, q->head->data, q->data_size);
 		}
 
-		//セルを解放し、ポインタ繋ぎ変え
-		QueCell *next = q->head->next;
-		free(q->head->data);
-		free(q->head);
-		q->head = next;
+		//セルを解放
+		QueCell *remove = q->head;
+		q->head = q->head->next;
+		Queue_cell_remove(remove);
+
 
 		q->que_length = q->que_length - 1;
 
@@ -82,12 +88,12 @@ int Que_deque(struct queue *q, void *data)
 	}
 }
 
-size_t Que_size(struct queue *q)
+size_t Queue_size(struct queue *q)
 {
 	return q->que_length;
 }
 
-void Que_clear(struct queue *q)
+void Queue_clear(struct queue *q)
 {
 	//空になるまでdeque()
 	while (Queue_size(q)) {

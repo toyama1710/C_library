@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdarg.h>
-#include "../utility/utility.h"
 
 //線形リストでQueueを実装する
 //リストの先頭からデータを取り出し、
@@ -33,9 +31,9 @@ void Queue_init(struct queue *q, const size_t data_size);
 
 //enque
 //q:操作対象のQueueへのポインタ
-//第二引数:格納するデータ(値渡し)
+//data:格納データへのポインタ
 //正しく格納できれば正数 エラーが起きたとき0を返す
-int Queue_enque(struct queue *q, ...);
+int Queue_enque(struct queue *q, void *data);
 
 //deque
 //q:操作対象のQueueへのポインタ

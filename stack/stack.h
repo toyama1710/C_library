@@ -2,6 +2,8 @@
 #define __Ei1710_STACK_H
 
 #include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
 
 //線形リストでスタックを実装
 

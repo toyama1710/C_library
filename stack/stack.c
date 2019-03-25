@@ -1,6 +1,3 @@
-#include <stddef.h>
-#include <stdlib.h>
-#include <string.h>
 #include "stack.h"
 
 StackCell *Stack_cell_create(const void *data, size_t data_size);

@@ -1,42 +1,60 @@
 #include "queue.h"
 
-void initQueue(struct queue *q, const size_t data_size)
+QueCell *Queue_cell_alloc(va_list data, size_t data_size)
 {
-	q->current = NULL;
+	QueCell *cell = malloc(sizeof(QueCell));
+
+	if (cell == NULL) {
+		return NULL;
+	}
+
+	cell->data = malloc(data_size);
+
+	if (cell->data == NULL) {
+		free(cell);
+		return NULL;
+	}
+
+	vmemcpy(cell->data, data);
+
+	return 0;
+}
+
+void Queue_init(struct queue *q, const size_t data_size)
+{
+	q->head = NULL;
 	q->last = NULL;
 
 	q->data_size = data_size;
-	q->que_size = 0;
+	q->que_length = 0;
 
 	return;
 }
 
-int Que_enque(struct queue *q, const void *data)
+int Queue_enque(struct queue *q, ...);
 {
-	QueCell *new_data = (QueCell *)malloc(sizeof(QueCell));
+	va_list data;
+	QueCell *new_data;
+
+	//セル生成
+	va_start(data, q);
+	new_data = Queue_cell_alloc(data);
+	va_end(data);
 
 	if (new_data == NULL) {
-		return -1;
+		return 0;
 	}
 
-	new_data->data = malloc(q->data_size);
-	new_data->next = NULL;
-
-	if (new_data->data == NULL) {
-		return -1;
-	} else {
-		memcpy(new_data->data, data, q->data_size);
-		++(q->que_size);
-	}
-
-	if (q->que_size <= 1) {
-		q->current = new_data;
+	//セル追加
+	if (q->last == NULL) {
 		q->last = new_data;
+		q->head = new_data;
 	} else {
 		q->last->next = new_data;
 		q->last = new_data;
 	}
 
+	q->que_length = q->que_length + 1;
 
 	return 0;
 }
@@ -44,38 +62,37 @@ int Que_enque(struct queue *q, const void *data)
 int Que_deque(struct queue *q, void *data)
 {
 	if (q->que_size > 0) {
-		QueCell *next = q->current->next;
+		//データコピー
+		
+		if (data != NULL) {
+			memcpy(data, q->head->data, q->data_size);
+		}
 
-		--(q->que_size);
-		memcpy(data, q->current->data, q->data_size);
+		//セルを解放し、ポインタ繋ぎ変え
+		QueCell *next = q->head->next;
+		free(q->head->data);
+		free(q->head);
+		q->head = next;
 
-		free(q->current->data);
-		free(q->current);
-		q->current = next;
+		q->que_length = q->que_length - 1;
+
+		return 1;
 	} else {
-		return -1;
+		return 0;
 	}
-
-	return 0;
 }
 
 size_t Que_size(struct queue *q)
 {
-	return q->que_size;
+	return q->que_length;
 }
 
 void Que_clear(struct queue *q)
 {
-	while (q->current != NULL) {
-		QueCell *next = q->current->next;
-
-		free(q->current->data);
-		free(q->current);
-
-		q->current = next;
+	//空になるまでdeque()
+	while (Queue_size(q)) {
+		Queue_deque(q, NULL);
 	}
-
-	initQueue(q, q->data_size);
 
 	return;
 }

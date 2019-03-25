@@ -4,26 +4,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
+#include "../utility/utility.h"
 
 //線形リストでQueueを実装する
+//リストの先頭からデータを取り出し、
+//リストの末尾にデータを追加していく
 
-//リストのセル構造体
-//data:実データへのポインタ, next:次セル
 typedef struct que_cell{
-    void *data; 
-    struct que_cell *next; 
+    void *data;  //実データへのポインタ
+    struct que_cell *next;  //次セル
 } QueCell;
 
-//head:次にデータを取り出す位置
-//last:次にデータを格納する位置 (の一つ前)
-//data_size:格納データの大きさ
-//que_length:格納データの個数 = キューの大きさ
 typedef struct queue {
-    QueCell *head;
-    QueCell *last;
+    QueCell *head; //キューの先頭(データの取り出し位置)
+    QueCell *last; //キューの末尾(データの格納位置)
 
-    size_t data_size;
-    size_t que_length;
+    size_t data_size; //格納データの大きさ
+    size_t que_length; //格納データの個数 = キューの大きさ
 } Queue;
 
 //Queue構造体の初期化を行う

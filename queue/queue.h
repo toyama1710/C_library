@@ -1,5 +1,5 @@
-#ifndef Ei1710_Queue_H
-#define Ei1710_Queue_H
+#ifndef EI1710_Queue_H
+#define EI1710_Queue_H
 
 #include <stdio.h>
 #include <stdlib.h>

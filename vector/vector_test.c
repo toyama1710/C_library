@@ -1,28 +1,60 @@
 #include <stdio.h>
-#include "test_vector.c"
+#include "vector.h"
+
+typedef int TestType;
 
 int main()
 {
     Vector vec;
+	char str[256];
+	TestType a;
+	TestType b;
 
-    initVector(&vec, 0, sizeof(int));
+    Vector_init(&vec, sizeof(TestType), 0);
 
-    int a;
-    while (scanf("%d", &a), a != 0) {
-        if (a == -1) {
-            scanf("%d", &a);
-            vec.push_back(&vec, &a);
-        } else if (a == -2) {
-            scanf("%d", &a);
-            vec.array(&vec, a, &a);
+	do {
+		scanf("%s", str);
 
-            printf("%d\n", a);
-        } else if (a == -3) {
-            printf("%zu\n", vec.size(&vec));
-        }
-    }
+		if (strcmp(str, "print") == 0) {
 
-    vec.clear(&vec);
+			for (int i = 0; i < Vector_size(&vec); i++) {
+				printf("%d ", *(TestType *)Vector_array(&vec, i));
+			}
+			putchar('\n');
+
+		} else if (str[0] == 'r') {
+			printf("index:");
+			scanf("%d", &a);
+
+			b = *(TestType *)Vector_array(&vec, a);
+
+			printf("%d\n", b);
+
+		} else if (str[0] == 'w') {
+			printf("index:");
+			scanf("%d", &a);
+
+			printf("data:");
+			scanf("%d", &b);
+
+			*(TestType *)Vector_array(&vec, a) = b;
+
+		} else if (str[0] == 'p') {
+			printf("data:");
+			scanf("%d", &b);
+
+			Vector_push_back(&vec, &b);
+
+		} else if (str[0] == 's') {
+			printf("%d\n", Vector_size(&vec));
+
+		} else if (str[0] == 'c') {
+			printf("%d\n", Vector_capacity(&vec));
+		}
+
+	} while(str[0] != 'q');
+
+	Vector_clear(&vec);
 
     return 0;
 }

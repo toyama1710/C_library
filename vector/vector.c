@@ -1,9 +1,11 @@
 #include "vector.h"
 
 //vector‚Ì‰Šú‰»
-int Vector_init(struct vector *vec, size_t vec_size, size_t data_size)
+int Vector_init(struct vector *vec, size_t data_size, size_t vec_size)
 {
 	vec->data_size = data_size;
+	vec->capacity = 0;
+	vec->array_size = 0;
 
 	if (vec_size > 0) {
 		vec->storage = calloc(vec_size, data_size);
@@ -11,13 +13,14 @@ int Vector_init(struct vector *vec, size_t vec_size, size_t data_size)
 		if (vec->storage == NULL) {
 			return 0;
 		} else {
+			vec->capacity = vec_size;
 			vec->array_size = vec_size;
-			return 1;
 		}
 	} else {
 		vec->storage = NULL;
-		vec->array_size = 0;
 	}
+
+	return 1;
 }
 
 //vector––”ö‚Éƒf[ƒ^‚ğ’Ç‰Á
@@ -66,7 +69,7 @@ void Vector_clear(struct vector *vec)
 {
 	free(vec->storage);
 
-	Vector_init(vec, 0, vec->data_size);
+	Vector_init(vec, vec->data_size, 0);
 
 	return;
 }

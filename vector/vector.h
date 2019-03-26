@@ -23,7 +23,7 @@ typedef struct vector {
 } Vector;
 
 //vector‚Ì‰Šú‰»
-int Vector_init(struct vector *vec, size_t vec_size, size_t data_size);
+int Vector_init(struct vector *vec, size_t data_size, size_t vec_size);
 
 //vector––”ö‚Éƒf[ƒ^‚ğ’Ç‰Á
 int Vector_push_back(struct vector *vec, void *data);

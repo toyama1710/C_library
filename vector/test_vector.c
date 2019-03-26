@@ -3,10 +3,10 @@
 #include <string.h>
 #include <stdio.h>
 
-typedef unsigned char __Byte; //Byte型だと既存の型名と被るかもしれないので
+typedef unsigned char Byte;
 
 //-------
-//1バイトずつmemcopy(), memmove()などでデータを格納
+//memcopy(), memmove()でオブジェクトをコピー
 //要素へのアクセスはsizeof(Type) * index バイト分先の要素を見て実現
 //あらかじめ大き目に領域を取っておき、キャパシティオーバーしたらrealloc()する
 //-------

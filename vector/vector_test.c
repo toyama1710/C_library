@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "vector.h"
 
-typedef long long TestType;
+typedef double TestType;
 
 int main()
 {
@@ -9,8 +9,9 @@ int main()
 	char str[256];
 	TestType a;
 	TestType b;
+	int indx;
 
-    Vector_init(&vec, sizeof(TestType), 0);
+	dbl_Vector_init(&vec, 0);
 
 	do {
 		scanf("%s", str);
@@ -18,32 +19,32 @@ int main()
 		if (strcmp(str, "print") == 0) {
 
 			for (int i = 0; i < Vector_size(&vec); i++) {
-				printf("%lld ", *(TestType *)Vector_array(&vec, i));
+				printf("%lf ", dbl_Vector_array(&vec, i));
 			}
 			putchar('\n');
 
 		} else if (str[0] == 'r') {
 			printf("index:");
-			scanf("%lld", &a);
+			scanf("%d", &indx);
 
-			b = *(TestType *)Vector_array(&vec, a);
+			b = dbl_Vector_array(&vec, indx);
 
-			printf("%lld\n", b);
+			printf("%lf\n", b);
 
 		} else if (str[0] == 'w') {
 			printf("index:");
-			scanf("%lld", &a);
+			scanf("%d", &indx);
 
 			printf("data:");
-			scanf("%lld", &b);
+			scanf("%lf", &a);
 
-			*(TestType *)Vector_array(&vec, a) = b;
+			dbl_Vector_array(&vec, indx) = a;
 
 		} else if (str[0] == 'p') {
 			printf("data:");
-			scanf("%lld", &b);
+			scanf("%lf", &b);
 
-			Vector_push_back(&vec, &b);
+			dbl_Vector_push_back(&vec, b);
 
 		} else if (str[0] == 's') {
 			printf("%lld\n", Vector_size(&vec));

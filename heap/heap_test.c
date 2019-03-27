@@ -8,7 +8,6 @@ int compare(const TestType *x, const TestType *y);
 
 int main()
 {
-	puts("str");
 	char str[256];
 
 	Heap p_que;
@@ -21,22 +20,21 @@ int main()
 		scanf("%s", str);
 
 		if (str[0] == 't') {
-
-			Heap_top(&p_que, &out);
-			printf("%d\n", out);
-
-		} else if (str[0] == 'p') {
-
-			Heap_remove(&p_que);
+			if (Heap_top(&p_que, &out) == 0) {
+				puts("error");
+			} else {
+				printf("%d\n", out);
+			}
 
 		} else if (str[0] == 'a') {
-
 			scanf("%d", &in);
 
 			Heap_add(&p_que, &in);
 		}
 
 	} while(str[0] != 'q');
+
+	Heap_clear(&p_que);
 
 	return 0;
 }

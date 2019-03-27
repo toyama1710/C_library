@@ -4,6 +4,9 @@
 #define left_index(X) ((X) * 2 + 1)
 #define right_index(X) ((X) * 2 + 2)
 
+//Heapの根を削除
+void Heap_remove(Heap *heap);
+
 void Heap_trickle_down(Heap *heap, int i); 
 void Heap_bubble_up(Heap *heap, int i);
 //size Byteのメモリオブジェクトを入れ替え
@@ -17,12 +20,22 @@ void Heap_init(Heap *heap, size_t data_size, int (*compare)(const void *, const 
 	return;
 }
 
-void Heap_top(Heap *heap, void *data)
+int Heap_top(Heap *heap, void *data)
 {
-	memcpy(data, Vector_array(&(heap->storage), 0), 
-			heap->storage.data_size);
 
-	return;
+	if (Heap_size(heap) > 0) {
+
+		if (data != NULL) {
+			memcpy(data, Vector_array(&(heap->storage), 0), 
+					heap->storage.data_size);
+		}
+
+		Heap_remove(heap);
+
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 int Heap_add(Heap *heap, void *data)
@@ -36,6 +49,19 @@ int Heap_add(Heap *heap, void *data)
 	return 1;
 }
 
+size_t Heap_size(Heap *heap)
+{
+	return Vector_size(&(heap->storage));
+}
+
+void Heap_clear(Heap *heap)
+{
+	Vector_clear(&(heap->storage));
+
+	return;
+}
+
+//----以下、.hに無い内部関数
 void Heap_remove(Heap *heap)
 {
 	memswap(Vector_array(&(heap->storage), 0),
@@ -48,14 +74,6 @@ void Heap_remove(Heap *heap)
 	return;
 }
 
-void Heap_clear(Heap *heap)
-{
-	Vector_clear(&(heap->storage));
-
-	return;
-}
-
-//----
 void Heap_trickle_down(Heap *heap, int i)
 {
 	do {

@@ -9,10 +9,20 @@ typedef struct {
 	int (*compare)(const void *, const void *);
 } Heap;
 
+//Heap構造体の初期化
 void Heap_init(Heap *heap, size_t data_size, int (*compare)(const void *, const void*));
+
+//Heapにデータを追加
 int Heap_add(Heap *heap, void *);
-void Heap_top(Heap *heap, void *);
-void Heap_remove(Heap *heap);
+
+//Heapからデータを取り出す
+//取り出したデータは削除される
+int Heap_top(Heap *heap, void *);
+
+//Heapに格納されているデータ数を数える
+size_t Heap_size(Heap *heap);
+
+//Heapをクリア
 void Heap_clear(Heap *heap);
 
 #endif

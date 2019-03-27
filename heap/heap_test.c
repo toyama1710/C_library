@@ -2,7 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef int TestType;
+typedef struct {
+	int cost;
+	int pos;
+} TestType;
 
 int compare(const TestType *x, const TestType *y);
 
@@ -23,11 +26,11 @@ int main()
 			if (Heap_top(&p_que, &out) == 0) {
 				puts("error");
 			} else {
-				printf("%d\n", out);
+				printf("cost:%d pos:%d\n", out.cost, out.pos);
 			}
 
 		} else if (str[0] == 'a') {
-			scanf("%d", &in);
+			scanf("%d %d", &in.cost, &in.pos);
 
 			Heap_add(&p_que, &in);
 		} else if (str[0] == 's') {
@@ -43,9 +46,9 @@ int main()
 
 int compare(const TestType *x, const TestType *y)
 {
-	if (*x > *y) {
+	if (x->cost > y->cost) {
 		return 1;
-	} else if (*x == *y) {
+	} else if (x->cost == y->cost) {
 		return 0;
 	} else {
 		return -1;

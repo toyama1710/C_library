@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include "vector.h"
 
-typedef double TestType;
+typedef struct {
+	int to, from;
+	int cost;
+} TestType;
 
 int main()
 {
@@ -11,7 +14,7 @@ int main()
 	TestType b;
 	int indx;
 
-	dbl_Vector_init(&vec, 0);
+	Vector_init(&vec, sizeof(TestType), 0);
 
 	do {
 		scanf("%s", str);
@@ -19,32 +22,34 @@ int main()
 		if (strcmp(str, "print") == 0) {
 
 			for (int i = 0; i < Vector_size(&vec); i++) {
-				printf("%lf ", dbl_Vector_array(&vec, i));
+				TestType tmp = *(TestType *)Vector_array(&vec, i);
+				printf("to: %d, from: %d, cost: %d\n", 
+						tmp.to, tmp.from, tmp.cost);
 			}
-			putchar('\n');
 
 		} else if (str[0] == 'r') {
 			printf("index:");
 			scanf("%d", &indx);
 
-			b = dbl_Vector_array(&vec, indx);
+			TestType tmp = *(TestType *)Vector_array(&vec, indx);
 
-			printf("%lf\n", b);
+			printf("to: %d, from: %d, cost: %d\n", 
+					tmp.to, tmp.from, tmp.cost);
 
 		} else if (str[0] == 'w') {
 			printf("index:");
 			scanf("%d", &indx);
 
 			printf("data:");
-			scanf("%lf", &a);
+			scanf("%d %d %d", &a.to, &a.from, &a.cost);
 
-			dbl_Vector_array(&vec, indx) = a;
+			*(TestType *)Vector_array(&vec, indx) = a;
 
 		} else if (str[0] == 'p') {
 			printf("data:");
-			scanf("%lf", &b);
+			scanf("%d %d %d", &a.to, &a.from, &a.cost);
 
-			dbl_Vector_push_back(&vec, b);
+			Vector_push_back(&vec, &a);
 
 		} else if (str[0] == 's') {
 			printf("%lld\n", Vector_size(&vec));

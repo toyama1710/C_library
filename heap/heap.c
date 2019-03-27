@@ -78,12 +78,13 @@ void Heap_remove(Heap *heap)
 //トップダウンにヒープ性を調整
 void Heap_trickle_down(Heap *heap, int i)
 {
-	int j, k;
+	int j = i; 
 	int r, l;
 
 	do {
+		i = j;
+
 		j = i;
-		k = i;
 		r = right_index(i);
 		l = left_index(i);
 
@@ -108,9 +109,7 @@ void Heap_trickle_down(Heap *heap, int i)
 					heap->storage.data_size);
 		}
 
-		i = j;
-
-	} while(i != k);
+	} while(i != j);
 
 	return;
 }

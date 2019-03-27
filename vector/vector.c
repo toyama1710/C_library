@@ -8,7 +8,7 @@ int Vector_init(Vector *vec, size_t data_size, size_t vec_size)
 	vec->array_size = 0;
 
 	if (vec_size > 0) {
-		vec->storage = calloc(vec_size, data_size);
+		vec->storage = malloc(vec_size * data_size);
 		
 		if (vec->storage == NULL) {
 			return 0;

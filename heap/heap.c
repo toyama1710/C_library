@@ -64,9 +64,10 @@ void Heap_clear(Heap *heap)
 //----以下、.hに無い内部関数
 void Heap_remove(Heap *heap)
 {
-	memswap(Vector_array(&(heap->storage), 0),
+	memcpy(Vector_array(&(heap->storage), 0),
 			Vector_array(&(heap->storage), Vector_size(&(heap->storage)) - 1),
 			heap->storage.data_size);
+
 	Vector_pop_back(&(heap->storage));
 
 	Heap_trickle_down(heap, 0);
@@ -74,42 +75,47 @@ void Heap_remove(Heap *heap)
 	return;
 }
 
+//トップダウンにヒープ性を調整
 void Heap_trickle_down(Heap *heap, int i)
 {
+	int j, k;
+	int r, l;
+
 	do {
-		int j = -1;
-		int r = right_index(i);
+		j = i;
+		k = i;
+		r = right_index(i);
+		l = left_index(i);
 
 		if (r < Vector_size(&(heap->storage)) &&
 				heap->compare(Vector_array(&(heap->storage), r),
-					Vector_array(&(heap->storage), i)) < 0) {
+					Vector_array(&(heap->storage), j)) < 0) {
 
-			int l = left_index(i);
+			j = r;
 
-			if (heap->compare(Vector_array(&(heap->storage), l),
-						Vector_array(&(heap->storage), r)) < 0) {
-				j = l;
-			} else {
-				j = r;
-			}
-		} else {
-			int l = left_index(i);
-			if (l < Vector_size(&(heap->storage)) &&
-					heap->compare(Vector_array(&(heap->storage), l),
-						Vector_array(&(heap->storage), i)) < 0) {
-				j = l;
-			}
+		}
+		
+		if (l < Vector_size(&(heap->storage)) &&
+				heap->compare(Vector_array(&(heap->storage), l),
+					Vector_array(&(heap->storage), j)) < 0) {
+			
+			j = l;
 		}
 
-		if (j >= 0) {
+		if (j != i) {
 			memswap(Vector_array(&(heap->storage), i),
 					Vector_array(&(heap->storage), j),
 					heap->storage.data_size);
 		}
+
 		i = j;
-	} while(i >= 0);
+
+	} while(i != k);
+
+	return;
 }
 
+//ボトムアップにヒープ性を調整
 void Heap_bubble_up(Heap *heap, int i)
 {
 	int p = parent_index(i);

@@ -43,35 +43,4 @@ size_t Vector_size(Vector *vec);
 //キャパシティを返す
 size_t Vector_capacity(Vector *vec);
 
-
-// int
-#define int_Vector_init(Vec, Arr_size) \
-	Vector_init(Vec, sizeof(int), Arr_size)
-
-#define int_Vector_push_back(Vec, Data) \
-	Vector_push_back(Vec, &(int){Data})
-
-#define int_Vector_array(Vec, Indx) \
-	*(int *)Vector_array(Vec, Indx)
-
-//long long
-#define llong_Vector_init(Vec, Arr_size) \
-	Vector_init(Vec, sizeof(long long), Arr_size)
-
-#define llong_Vector_push_back(Vec, Data) \
-	Vector_push_back(Vec, &(long long){Data})
-
-#define llong_Vector_Array(Vec, Indx) \
-	*(long long *)Vector_array(Vec, Indx)
-
-//double
-#define dbl_Vector_init(Vec, Arr_size) \
-	Vector_init(Vec, sizeof(double), Arr_size)
-
-#define dbl_Vector_push_back(Vec, Data) \
-	Vector_push_back(Vec, &(double){Data})
-
-#define dbl_Vector_array(Vec, Indx) \
-	*(double *)Vector_array(Vec, Indx)
-
 #endif

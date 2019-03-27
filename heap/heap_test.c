@@ -30,6 +30,8 @@ int main()
 			scanf("%d", &in);
 
 			Heap_add(&p_que, &in);
+		} else if (str[0] == 's') {
+			printf("%u\n", Heap_size(&p_que));
 		}
 
 	} while(str[0] != 'q');

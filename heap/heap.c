@@ -135,15 +135,13 @@ void Heap_bubble_up(Heap *heap, int i)
 //Xor Swap
 void memswap(void *x, void *y, size_t size)
 {
-	if (x == y) {
-		return;
-	} else {
+	if (x != y) {
 		while (size--) {
 			*((unsigned char *)x + size) ^= *((unsigned char *)y + size);
 			*((unsigned char *)y + size) ^= *((unsigned char *)x + size);
 			*((unsigned char *)x + size) ^= *((unsigned char *)y + size);
 		}
-
-		return;
 	}
+
+	return;
 }

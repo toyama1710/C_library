@@ -47,10 +47,10 @@ int main()
 int compare(const TestType *x, const TestType *y)
 {
 	if (x->cost > y->cost) {
-		return -1;
+		return 1;
 	} else if (x->cost == y->cost) {
 		return 0;
 	} else {
-		return 1;
+		return -1;
 	}
 }

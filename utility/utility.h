@@ -12,8 +12,12 @@
 int finput(FILE *source, const char *format, ...);
 
 //O(n log n) のソート
-int sort(void *base, size_t n_memb, size_t data_size, 
-		int (*cmp)(const void *, const void *));
+//使い方はqsort()に同じ
+void sort(void *base, size_t n_memb, size_t data_size, 
+		int (*compare)(const void *, const void *));
+
+//sizeByte分のメモリオブジェクトの入れ替え
+void memswap(void *x, void *y, size_t size);
 
 //比較関数群
 int int_compare(int *x, int *y);

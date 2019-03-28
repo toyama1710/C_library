@@ -7,3 +7,6 @@ Vector_push_back()は、配列を拡張してその末尾にデータを追加�
 Vector_array()は、要素へのポインタを返す<br>
 
 Vector_pop_back()は、配列末尾の要素を削除する<br>
+
+Vector_clear()でVectorをクリア<br>
+使い終わったVectorは必ずVector_clear()で破棄すること！<br>
